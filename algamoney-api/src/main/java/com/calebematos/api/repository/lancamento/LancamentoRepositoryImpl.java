@@ -1,5 +1,6 @@
 package com.calebematos.api.repository.lancamento;
 
+import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -16,6 +17,9 @@ import org.springframework.data.domain.PageImpl;
 import org.springframework.data.domain.Pageable;
 import org.springframework.util.StringUtils;
 
+import com.calebematos.api.dto.LancamentoEstatisticaPorCategoria;
+import com.calebematos.api.dto.LancamentoEstatisticaPorDia;
+import com.calebematos.api.dto.LancamentoEstatisticaPorPessoa;
 import com.calebematos.api.model.Categoria_;
 import com.calebematos.api.model.Lancamento;
 import com.calebematos.api.model.Lancamento_;
@@ -28,6 +32,78 @@ public class LancamentoRepositoryImpl implements LancamentoRepositoryQuery {
 	@PersistenceContext
 	private EntityManager manager;
 
+
+	@Override
+	public List<LancamentoEstatisticaPorCategoria> porCategoria(LocalDate mesReferencia) {
+		CriteriaBuilder builder = manager.getCriteriaBuilder();
+		CriteriaQuery<LancamentoEstatisticaPorCategoria> criteria = builder.createQuery(LancamentoEstatisticaPorCategoria.class);
+		Root<Lancamento> root = criteria.from(Lancamento.class);
+		
+		criteria.select(builder.construct(LancamentoEstatisticaPorCategoria.class, 
+				root.get(Lancamento_.categoria),
+				builder.sum(root.get(Lancamento_.valor))
+				));
+		
+		LocalDate primeiroDia = mesReferencia.withDayOfMonth(1);
+		LocalDate ultimoDia = mesReferencia.withDayOfMonth(mesReferencia.lengthOfMonth());
+		
+		criteria.where(builder.greaterThanOrEqualTo(root.get(Lancamento_.dataVencimento), primeiroDia),
+				builder.lessThanOrEqualTo(root.get(Lancamento_.dataVencimento), ultimoDia));
+		
+		criteria.groupBy(root.get(Lancamento_.categoria));
+		
+		TypedQuery<LancamentoEstatisticaPorCategoria> query = manager.createQuery(criteria);
+		
+		return query.getResultList();
+	}
+	
+	@Override
+	public List<LancamentoEstatisticaPorDia> porDia(LocalDate mesReferencia) {
+		CriteriaBuilder builder = manager.getCriteriaBuilder();
+		CriteriaQuery<LancamentoEstatisticaPorDia> criteria = builder.createQuery(LancamentoEstatisticaPorDia.class);
+		Root<Lancamento> root = criteria.from(Lancamento.class);
+		
+		criteria.select(builder.construct(LancamentoEstatisticaPorDia.class, 
+				root.get(Lancamento_.tipo),
+				root.get(Lancamento_.dataVencimento),
+				builder.sum(root.get(Lancamento_.valor))
+				));
+		
+		LocalDate primeiroDia = mesReferencia.withDayOfMonth(1);
+		LocalDate ultimoDia = mesReferencia.withDayOfMonth(mesReferencia.lengthOfMonth());
+		
+		criteria.where(builder.greaterThanOrEqualTo(root.get(Lancamento_.dataVencimento), primeiroDia),
+				builder.lessThanOrEqualTo(root.get(Lancamento_.dataVencimento), ultimoDia));
+		
+		criteria.groupBy(root.get(Lancamento_.tipo), root.get(Lancamento_.dataVencimento));
+		
+		TypedQuery<LancamentoEstatisticaPorDia> query = manager.createQuery(criteria);
+		
+		return query.getResultList();
+	}
+	
+	@Override
+	public List<LancamentoEstatisticaPorPessoa> porPessoa(LocalDate inicio, LocalDate fim) {
+		CriteriaBuilder builder = manager.getCriteriaBuilder();
+		CriteriaQuery<LancamentoEstatisticaPorPessoa> criteria = builder.createQuery(LancamentoEstatisticaPorPessoa.class);
+		Root<Lancamento> root = criteria.from(Lancamento.class);
+		
+		criteria.select(builder.construct(LancamentoEstatisticaPorPessoa.class, 
+				root.get(Lancamento_.tipo),
+				root.get(Lancamento_.pessoa),
+				builder.sum(root.get(Lancamento_.valor))
+				));
+		
+		criteria.where(builder.greaterThanOrEqualTo(root.get(Lancamento_.dataVencimento), inicio),
+				builder.lessThanOrEqualTo(root.get(Lancamento_.dataVencimento), fim));
+		
+		criteria.groupBy(root.get(Lancamento_.tipo), root.get(Lancamento_.pessoa));
+		
+		TypedQuery<LancamentoEstatisticaPorPessoa> query = manager.createQuery(criteria);
+		
+		return query.getResultList();
+	}
+	
 	@Override
 	public Page<Lancamento> filtrar(LancamentoFilter lancamentoFilter, Pageable pageable) {
 		CriteriaBuilder builder = manager.getCriteriaBuilder();
@@ -106,5 +182,6 @@ public class LancamentoRepositoryImpl implements LancamentoRepositoryQuery {
 		criteria.select(builder.count(root));
 		return manager.createQuery(criteria).getSingleResult();
 	}
+
 
 }
