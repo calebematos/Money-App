@@ -22,6 +22,7 @@ import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.context.request.WebRequest;
 import org.springframework.web.servlet.mvc.method.annotation.ResponseEntityExceptionHandler;
 
+import com.calebematos.api.service.exception.EntidadeNaoExiteException;
 import com.calebematos.api.service.exception.PessoaInexistenteOuInativaException;
 
 @ControllerAdvice
@@ -72,6 +73,13 @@ public class AlgaMoneyExceptionHandler extends ResponseEntityExceptionHandler {
 		String mensagemUsuario = messageSource.getMessage("pessoa.inexistente-ou-inativa", null, LocaleContextHolder.getLocale());
 		List<Erro> erros = Arrays.asList(new Erro(mensagemUsuario, mensagemDesenvolvedor));
 		return handleExceptionInternal(ex, erros, new HttpHeaders(), HttpStatus.BAD_REQUEST, request);
+	}
+	@ExceptionHandler({EntidadeNaoExiteException.class})
+	public ResponseEntity<Object> handlerEntidadeNaoExiteException(EntidadeNaoExiteException ex, WebRequest request){
+		String mensagemDesenvolvedor = ex.toString();
+		String mensagemUsuario = messageSource.getMessage("recurso.nao-encontrado", null, LocaleContextHolder.getLocale());
+		List<Erro> erros = Arrays.asList(new Erro(mensagemUsuario, mensagemDesenvolvedor));
+		return handleExceptionInternal(ex, erros, new HttpHeaders(), HttpStatus.NOT_FOUND, request);
 	}
 	
 	private List<Erro> criarListaDeErros(BindingResult bindingResult) {
