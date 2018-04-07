@@ -11,7 +11,9 @@ import org.springframework.context.ApplicationEventPublisher;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.format.annotation.DateTimeFormat;
+import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
+import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.DeleteMapping;
@@ -47,11 +49,21 @@ public class LancamentoResource {
 	@Autowired
 	private ApplicationEventPublisher publisher;
 	
+	@GetMapping("/relatorios/por-pessoa")
+	@PreAuthorize("hasAuthority('ROLE_PESQUISAR_LANCAMENTO') and #oauth2.hasScope('read')")
+	public ResponseEntity<byte[]> relatorioPorPesso(
+			@RequestParam @DateTimeFormat(pattern="yyyy-MM-dd") LocalDate inicio, 
+			@RequestParam @DateTimeFormat(pattern="yyyy-MM-dd") LocalDate fim) throws Exception{
+		byte[] relatorio = lancamentoService.relatorioPorPessoa(inicio, fim);
+		
+		return ResponseEntity.ok().header(HttpHeaders.CONTENT_TYPE, MediaType.APPLICATION_PDF_VALUE).body(relatorio);
+	}
+	
 	@GetMapping("/estatisticas/por-categoria")
 	@PreAuthorize("hasAuthority('ROLE_PESQUISAR_LANCAMENTO') and #oauth2.hasScope('read')")
 	public List<LancamentoEstatisticaPorCategoria> porCategoria(
 			@RequestParam(value = "mesReferencia", required = false) 
-			@DateTimeFormat(iso = DateTimeFormat.ISO.DATE) LocalDate mesReferencia){
+			@DateTimeFormat(pattern="yyyy-MM-dd") LocalDate mesReferencia){
 		return lancamentoRepository.porCategoria(mesReferencia);
 	}
 
@@ -59,7 +71,7 @@ public class LancamentoResource {
 	@PreAuthorize("hasAuthority('ROLE_PESQUISAR_LANCAMENTO') and #oauth2.hasScope('read')")
 	public List<LancamentoEstatisticaPorDia> porDia(
 			@RequestParam(value = "mesReferencia", required = false) 
-			@DateTimeFormat(iso = DateTimeFormat.ISO.DATE) LocalDate mesReferencia){
+			@DateTimeFormat(pattern="yyyy-MM-dd") LocalDate mesReferencia){
 		return lancamentoRepository.porDia(mesReferencia);
 	}
 	
