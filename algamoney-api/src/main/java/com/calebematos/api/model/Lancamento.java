@@ -13,9 +13,12 @@ import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
+import javax.persistence.Transient;
 import javax.validation.constraints.NotNull;
 
 import org.hibernate.validator.constraints.NotBlank;
+
+import com.fasterxml.jackson.annotation.JsonIgnore;
 
 @Entity
 @Table(name = "lancamento")
@@ -53,6 +56,12 @@ public class Lancamento {
 	@ManyToOne
 	@JoinColumn(name = "codigo_pessoa")
 	private Pessoa pessoa;
+	
+	@Transient
+	@JsonIgnore
+	public Boolean isReceita() {
+		return TipoLancamento.RECEITA.equals(this.tipo);
+	}
 
 	public Long getCodigo() {
 		return codigo;
