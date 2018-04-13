@@ -26,6 +26,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.multipart.MultipartFile;
 
 import com.calebematos.api.dto.LancamentoEstatisticaPorCategoria;
 import com.calebematos.api.dto.LancamentoEstatisticaPorDia;
@@ -48,6 +49,13 @@ public class LancamentoResource {
 	
 	@Autowired
 	private ApplicationEventPublisher publisher;
+	
+	
+	@PostMapping("/anexo")
+	@PreAuthorize("hasAuthority('ROLE_CADASTRAR_LANCAMENTO') and #oauth2.hasScope('write')")
+	public void anexar(@RequestParam("file") MultipartFile anexo) {
+		
+	}
 	
 	@GetMapping("/relatorios/por-pessoa")
 	@PreAuthorize("hasAuthority('ROLE_PESQUISAR_LANCAMENTO') and #oauth2.hasScope('read')")
