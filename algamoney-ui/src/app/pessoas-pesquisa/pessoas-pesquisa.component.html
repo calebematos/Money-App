@@ -25,12 +25,14 @@
             <span>{{ pess.ativo ? "Ativo" : "Inativo" }}</span>
           </ng-template>
         </p-column>
+
         <p-column styleClass="col-acoes">
-          <ng-template>
+            <ng-template pTemplate="body">
               <a pButton icon="fa-pencil" pTooltip="Editar" tooltipPosition="top"></a>
               <button pButton icon="fa-trash" pTooltip="Excluir" tooltipPosition="top"></button>
-          </ng-template>
-        </p-column>
+            </ng-template>
+          </p-column>
+
       </p-dataTable>
     </div>
     <div class="ui-g-12">
