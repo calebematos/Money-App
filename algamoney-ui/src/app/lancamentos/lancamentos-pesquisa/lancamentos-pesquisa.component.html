@@ -1,5 +1,7 @@
 <div class="container">
-    <div class="ui-g">
+  <div class="ui-g">
+
+    <form autocomplete="off" (ngSubmit)="pesquisar()">
 
       <div class="ui-g-12">
         <h1>Lançamentos</h1>
@@ -7,54 +9,55 @@
 
       <div class="ui-g-12 ui-fluid">
         <label>Descrição</label>
-        <input pInputText type="text">
+        <input pInputText type="text" name="descricao" [(ngModel)]=descricao>
       </div>
 
       <div class="ui-g-12">
         <label style="display:block">Vencimento</label>
-        <input pInputText type="text">
+        <p-calendar dateFormat="dd/mm/yy" [inputStyle]="{width:'90px'}" name="vencimentoInicio" [(ngModel)]="dataVencimentoInicio"></p-calendar>
         <label>até</label>
-        <input pInputText type="text">
+        <p-calendar dateFormat="dd/mm/yy" [inputStyle]="{width:'90px'}" name="vencimentoFim" [(ngModel)]="dataVencimentoFim"></p-calendar>
       </div>
 
       <div class="ui-g-12">
         <button pButton type="submit" label="Pesquisar"></button>
       </div>
+    </form>
+  </div>
+
+  <div class="ui-g">
+    <div class="ui-g-12">
+      <p-dataTable [value]="lancamentos" [paginator]="true" [rows]=5 [responsive]="true" emptyMessage="Nenhum lançamento encotrado">
+        <p-column field="pessoa" header="Pessoa"></p-column>
+        <p-column field="descricao" header="Descrição"></p-column>
+        <p-column field="dataVencimento" header="Vencimento" styleClass="col-data">
+          <ng-template let-lanc="rowData" pTemplate="body">
+            <span>{{ lanc.dataVencimento | date:'dd/MM/y' }}</span>
+          </ng-template>
+        </p-column>
+        <p-column field="dataPagamento" header="Pagamento" styleClass="col-data">
+          <ng-template let-lanc="rowData" pTemplate="body">
+            <span>{{ lanc.dataPagamento | date:'dd/MM/y' }}</span>
+          </ng-template>
+        </p-column>
+        <p-column field="valor" header="Valor" styleClass="col-valor">
+          <ng-template let-lanc="rowData" pTemplate="body">
+            <span [style.color]="lanc.tipo === 'DESPESA' ? 'red' : 'blue'">{{ lanc.valor | currency:'BRL':true:'1.2-2'}}</span>
+          </ng-template>
+        </p-column>
+        <p-column styleClass="col-acoes">
+          <ng-template pTemplate="body">
+            <a pButton icon="fa-pencil" pTooltip="Editar" tooltipPosition="top"></a>
+            <button pButton icon="fa-trash" pTooltip="Excluir" tooltipPosition="top"></button>
+          </ng-template>
+        </p-column>
+      </p-dataTable>
     </div>
 
-    <div class="ui-g">
-      <div class="ui-g-12">
-        <p-dataTable [value]="lancamentos" [paginator]="true" [rows]=5 [responsive]="true">
-          <p-column field="pessoa" header="Pessoa"></p-column>
-          <p-column field="descricao" header="Descrição"></p-column>
-          <p-column field="dataVencimento" header="Vencimento" styleClass="col-data">
-            <ng-template let-lanc="rowData" pTemplate="body">
-              <span>{{ lanc.dataVencimento | date:'dd/MM/y' }}</span>
-            </ng-template>
-          </p-column>
-          <p-column field="dataPagamento" header="Pagamento" styleClass="col-data">
-              <ng-template let-lanc="rowData" pTemplate="body">
-                  <span>{{ lanc.dataPagamento | date:'dd/MM/y' }}</span>
-                </ng-template>
-          </p-column>
-          <p-column field="valor" header="Valor" styleClass="col-valor">
-            <ng-template let-lanc="rowData" pTemplate="body">
-              <span [style.color]="lanc.tipo === 'DESPESA' ? 'red' : 'blue'">{{ lanc.valor | currency:'BRL':true:'1.2-2'}}</span>
-            </ng-template>
-          </p-column>
-          <p-column styleClass="col-acoes">
-            <ng-template pTemplate="body">
-              <a pButton icon="fa-pencil" pTooltip="Editar" tooltipPosition="top"></a>
-              <button pButton icon="fa-trash" pTooltip="Excluir" tooltipPosition="top"></button>
-            </ng-template>
-          </p-column>
-        </p-dataTable>
-      </div>
-
-      <div class="ui-g-12">
-        <button pButton label="Novo Lançamento"></button>
-      </div>
-
+    <div class="ui-g-12">
+      <button pButton label="Novo Lançamento"></button>
     </div>
 
   </div>
+
+</div>
