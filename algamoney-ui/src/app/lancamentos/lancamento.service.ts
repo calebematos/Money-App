@@ -44,7 +44,7 @@ export class LancamentoService {
     return this.http.get(`${this.lancamentosURL}?resumo`, { headers, search: params })
       .toPromise()
       .then(response => {
-        const responseJson =   response.json();
+        const responseJson = response.json();
         const lancamentos = responseJson.content;
         const total = responseJson.totalElements;
 
@@ -55,5 +55,15 @@ export class LancamentoService {
 
         return resultado;
       });
+  }
+
+  excluir(codigo: number): Promise<void> {
+    const headers = new Headers();
+
+    headers.append('Authorization', 'Basic YWRtaW46YWRtaW4=');
+
+    return this.http.delete(`${this.lancamentosURL}/${codigo}`, { headers })
+      .toPromise()
+      .then(() => null);
   }
 }
