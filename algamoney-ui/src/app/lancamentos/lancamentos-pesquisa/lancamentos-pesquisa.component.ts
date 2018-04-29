@@ -1,6 +1,12 @@
-import { LancamentoService, LancamentosFiltro } from './../lancamento.service';
 import { Component, OnInit, ViewChild } from '@angular/core';
+
+import { ConfirmationService } from 'primeng/api';
 import { LazyLoadEvent } from 'primeng/components/common/lazyloadevent';
+import { ToastyService } from 'ng2-toasty';
+
+import { ErrorHandlerService } from './../../core/error-handler.service';
+import { LancamentoService, LancamentosFiltro } from './../lancamento.service';
+
 
 @Component({
   selector: 'app-lancamentos-pesquisa',
@@ -14,7 +20,12 @@ export class LancamentosPesquisaComponent implements OnInit {
   totalDeRegistros;
   @ViewChild('tabela') tabela;
 
-  constructor(private lancamentoService: LancamentoService) { }
+  constructor(
+    private lancamentoService: LancamentoService,
+    private errorHandler: ErrorHandlerService,
+    private toasty: ToastyService,
+    private confirmation: ConfirmationService
+  ) { }
 
   ngOnInit() {
   }
@@ -26,7 +37,8 @@ export class LancamentosPesquisaComponent implements OnInit {
       .then(resultado => {
         this.lancamentos = resultado.lancamentos;
         this.totalDeRegistros = resultado.total;
-      });
+      })
+      .catch(erro => this.errorHandler.handle(erro));
   }
 
   aoMudarPagina(event: LazyLoadEvent) {
@@ -34,11 +46,28 @@ export class LancamentosPesquisaComponent implements OnInit {
     this.pesquisar(pagina);
   }
 
+  confirmarExclusao(lancamento: any) {
+    this.confirmation.confirm({
+      message: 'Deseja excluir esse lançamento?',
+      accept: () => {
+        this.excluir(lancamento);
+      }
+    });
+
+  }
+
+
   excluir(lancamento: any) {
     this.lancamentoService.excluir(lancamento.codigo)
       .then(() => {
-        this.tabela.first = 0;
-      });
+        if (this.tabela.first === 0) {
+          this.pesquisar();
+        } else {
+          this.tabela.first = 0;
+        }
+        this.toasty.success('Lançamento excluído com sucesso!');
+      })
+      .catch(erro => this.errorHandler.handle(erro));
   }
 
 }

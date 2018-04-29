@@ -1,6 +1,8 @@
 import { Http, Headers, URLSearchParams } from '@angular/http';
 import { Injectable } from '@angular/core';
 
+import { Pessoa } from './../core/model';
+
 import 'rxjs/operator/toPromise';
 
 export class PessoaFiltro {
@@ -50,6 +52,35 @@ export class PessoasService {
       .toPromise()
       .then(result => result.json().content);
 
+  }
+
+  excluir(codigo: number): Promise<any> {
+    const headers = new Headers();
+    headers.append('Authorization', 'Basic YWRtaW46YWRtaW4=');
+
+    return this.http.delete(`${this.pessoasURL}/${codigo}`, { headers })
+      .toPromise()
+      .then(() => null);
+  }
+
+  altarStatus(pessoa: any): Promise<any> {
+    const headers = new Headers();
+    headers.append('Authorization', 'Basic YWRtaW46YWRtaW4=');
+    headers.append('Content-Type', 'application/json');
+
+    return this.http.put(`${this.pessoasURL}/${pessoa.codigo}/ativo`, JSON.stringify(!pessoa.ativo), { headers })
+      .toPromise()
+      .then(() => null);
+  }
+
+  adicionar(pessoa: Pessoa): Promise<Pessoa> {
+    const headers = new Headers();
+    headers.append('Authorization', 'Basic YWRtaW46YWRtaW4=');
+    headers.append('Content-Type', 'application/json');
+
+    return this.http.post(this.pessoasURL, JSON.stringify(pessoa), { headers })
+      .toPromise()
+      .then(response => response.json());
   }
 
 
