@@ -15,7 +15,8 @@ public class PessoaService {
 	private PessoaRepository pessoaRepository;
 
 	public Pessoa salvar(Pessoa pessoa) {
-		pessoa.getContatos().forEach(p -> p.setPessoa(pessoa));
+		if(pessoa.getContatos() != null)
+			pessoa.getContatos().forEach(p -> p.setPessoa(pessoa));
 		return pessoaRepository.save(pessoa);
 	}
 	
