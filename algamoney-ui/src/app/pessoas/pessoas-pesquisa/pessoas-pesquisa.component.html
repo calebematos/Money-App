@@ -22,8 +22,8 @@
         [rows]="filtro.itensPorPagina" [lazy]=true [totalRecords]="totalDeRegistros"
         (onLazyLoad)="aoMudarPagina($event)" #tabela>
         <p-column field="nome" header="Nome"></p-column>
-        <p-column field="cidade" header="Cidade"></p-column>
-        <p-column field="estado" header="estado"></p-column>
+        <p-column field="endereco.cidade" header="Cidade"></p-column>
+        <p-column field="endereco.estado" header="estado"></p-column>
         <p-column field="status" header="Status">
           <ng-template let-pess="rowData" pTemplate="body">
             <a href="javascript:;" (click)="altarStatus(pess)" pTooltip="{{ pess.ativo ? 'Desativar' : 'Ativar' }}" tooltipPosition="top">
