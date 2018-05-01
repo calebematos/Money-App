@@ -13,6 +13,7 @@ import { PessoasService } from './../pessoas/pessoas.service';
 import { LancamentoService } from './../lancamentos/lancamento.service';
 import { NavbarComponent } from './navbar/navbar.component';
 import { ErrorHandlerService } from './error-handler.service';
+import { PaginaNaoEncontradaComponent } from './pagina-nao-encontrada.component';
 
 registerLocaleData(localePt, 'pt-BR');
 
@@ -24,7 +25,7 @@ registerLocaleData(localePt, 'pt-BR');
     ToastyModule.forRoot(),
     ConfirmDialogModule,
   ],
-  declarations: [NavbarComponent],
+  declarations: [NavbarComponent, PaginaNaoEncontradaComponent],
   exports: [
     NavbarComponent,
     ToastyModule,
