@@ -1,3 +1,4 @@
+import { Title } from '@angular/platform-browser';
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { FormControl } from '@angular/forms';
@@ -34,14 +35,18 @@ export class LancamentoCadastroComponent implements OnInit {
     private toasty: ToastyService,
     private errorHandler: ErrorHandlerService,
     private route: ActivatedRoute,
-    private router: Router
+    private router: Router,
+    private title: Title
   ) { }
 
   ngOnInit() {
 
+    this.title.setTitle('Novo lançamento');
+
     const lancamentoCodigo = this.route.snapshot.params['codigo'];
     if (lancamentoCodigo) {
       this.carregarLancamento(lancamentoCodigo);
+      this.title.setTitle('Edição de lançamento');
     }
 
     this.carregarCategorias();
