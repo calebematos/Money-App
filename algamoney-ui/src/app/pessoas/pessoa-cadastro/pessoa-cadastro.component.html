@@ -2,7 +2,7 @@
   <form #pessoaForm="ngForm" autocomplete="off" (ngSubmit)="salvar(pessoaForm)">
     <div class="ui-g">
       <div class="ui-g-12">
-        <h1>Nova Pessoa</h1>
+        <h1>{{editando ? 'Edição de' : 'Nova'}} Pessoa</h1>
       </div>
 
       <div class="ui-g-12 ui-fluid">
@@ -49,7 +49,7 @@
       </div>
       <div class="ui-g-12">
           <button pButton type="submit" label="Salvar" [disabled]="pessoaForm.invalid"></button>
-          <button pButton type="button" label="Novo" class="ui-button-info"></button>
+          <button pButton type="button" label="Novo" class="ui-button-info" (click)="nova(pessoaForm)"></button>
           <a routerLink="/pessoas">Voltar para a pesquisa</a>
         </div>
     </div>

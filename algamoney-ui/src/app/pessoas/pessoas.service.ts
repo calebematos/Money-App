@@ -4,6 +4,7 @@ import { Injectable } from '@angular/core';
 import { Pessoa } from './../core/model';
 
 import 'rxjs/operator/toPromise';
+import { stringify } from 'querystring';
 
 export class PessoaFiltro {
   pagina = 0;
@@ -82,6 +83,26 @@ export class PessoasService {
       .toPromise()
       .then(response => response.json());
   }
+
+  buscarPorCodigo(codigo: number): Promise<Pessoa> {
+    const headers = new Headers();
+    headers.append('Authorization', 'Basic YWRtaW46YWRtaW4=');
+
+    return this.http.get(`${this.pessoasURL}/${codigo}`, { headers })
+      .toPromise()
+      .then(response => response.json());
+  }
+
+  atualizar(pessoa: Pessoa): Promise<Pessoa> {
+    const headers = new Headers();
+    headers.append('Authorization', 'Basic YWRtaW46YWRtaW4=');
+    headers.append('Content-Type', 'application/json');
+
+    return this.http.put(`${this.pessoasURL}/${pessoa.codigo}`, JSON.stringify(pessoa), { headers })
+      .toPromise()
+      .then(response => response.json());
+  }
+
 
 
 }

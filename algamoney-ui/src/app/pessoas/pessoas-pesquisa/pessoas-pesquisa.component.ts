@@ -1,3 +1,4 @@
+import { Title } from '@angular/platform-browser';
 import { ConfirmationService } from 'primeng/api';
 import { Component, OnInit, ViewChild } from '@angular/core';
 
@@ -20,14 +21,15 @@ export class PessoasPesquisaComponent implements OnInit {
   @ViewChild('tabela') tabela;
 
   ngOnInit() {
+    this.title.setTitle('Pesquisa de pessoas');
   }
 
   constructor(
     private pessoasService: PessoasService,
     private errorHandler: ErrorHandlerService,
-
     private toasty: ToastyService,
-    private confirmation: ConfirmationService
+    private confirmation: ConfirmationService,
+    private title: Title
   ) { }
 
   pesquisar(pagina = 0) {
