@@ -21,13 +21,13 @@ export class Endereco {
 }
 
 export class Lancamento {
+  tipo = 'RECEITA';
   codigo: number;
   descricao: string;
   dataVencimento: Date;
   dataPagamento: Date;
   valor: number;
   observacao: string;
-  tipo = 'RECEITA';
   categoria = new Categoria();
   pessoa = new Pessoa();
 }
