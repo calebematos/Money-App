@@ -8,6 +8,8 @@ import { Title } from '@angular/platform-browser';
 import { ConfirmationService } from 'primeng/api';
 import { ConfirmDialogModule } from 'primeng/confirmdialog';
 import { ToastyModule } from 'ng2-toasty';
+import { JwtHelper } from 'angular2-jwt';
+
 
 import { CategoriaService } from './../categorias/categoria.service';
 import { PessoasService } from './../pessoas/pessoas.service';
@@ -15,6 +17,7 @@ import { LancamentoService } from './../lancamentos/lancamento.service';
 import { NavbarComponent } from './navbar/navbar.component';
 import { ErrorHandlerService } from './error-handler.service';
 import { PaginaNaoEncontradaComponent } from './pagina-nao-encontrada.component';
+import { AuthService } from '../seguranca/auth.service';
 
 registerLocaleData(localePt, 'pt-BR');
 
@@ -37,6 +40,8 @@ registerLocaleData(localePt, 'pt-BR');
     PessoasService,
     CategoriaService,
     ErrorHandlerService,
+    AuthService,
+    JwtHelper,
 
     ConfirmationService,
     Title,
