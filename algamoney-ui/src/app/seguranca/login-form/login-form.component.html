@@ -1,0 +1,22 @@
+<div class="container" style="max-width: 400px; margin: auto">
+  <form autocomplete="off" #f="ngForm">
+    <div class="ui-g ui-fluid" >
+
+      <div class="ui-g-12">
+        <h1>Login</h1>
+      </div>
+      <div class="ui-g-12">
+        <input pInputText name="usuario" type="email" placeholder="E-mail" ngModel #usuario required>
+      </div>
+
+      <div class="ui-g-12">
+        <input pInputText name="senha" type="password" placeholder="Senha" ngModel #senha required>
+      </div>
+
+      <div class="ui-g-12">
+        <button pButton label="Login" (click)="login(usuario.value, senha.value); senha.value='';" [disabled]="!f.valid"></button>
+      </div>
+
+    </div>
+  </form>
+</div>
