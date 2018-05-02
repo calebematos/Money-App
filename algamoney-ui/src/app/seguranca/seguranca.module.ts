@@ -7,6 +7,7 @@ import { AuthHttp, AuthConfig } from 'angular2-jwt';
 import { ButtonModule } from 'primeng/button';
 import { InputTextModule } from 'primeng/inputtext';
 
+import { AuthGuard } from './auth.guard';
 import { AuthService } from './auth.service';
 import { MoneyHttp } from './money-http';
 import { LoginFormComponent } from './login-form/login-form.component';
@@ -37,7 +38,8 @@ export function authHttpServiceFactory(auth: AuthService , http: Http, options: 
       provide: AuthHttp,
       useFactory: authHttpServiceFactory,
       deps: [AuthService, Http, RequestOptions]
-    }
+    },
+    AuthGuard
   ]
 })
 export class SegurancaModule { }
