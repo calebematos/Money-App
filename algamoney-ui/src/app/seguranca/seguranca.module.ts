@@ -12,6 +12,7 @@ import { AuthService } from './auth.service';
 import { MoneyHttp } from './money-http';
 import { LoginFormComponent } from './login-form/login-form.component';
 import { SegurancaRoutingModule } from './seguranca-routing.module';
+import { LogoutService } from './logout.service';
 
 
 export function authHttpServiceFactory(auth: AuthService , http: Http, options: RequestOptions) {
@@ -39,7 +40,8 @@ export function authHttpServiceFactory(auth: AuthService , http: Http, options: 
       useFactory: authHttpServiceFactory,
       deps: [AuthService, Http, RequestOptions]
     },
-    AuthGuard
+    AuthGuard,
+    LogoutService
   ]
 })
 export class SegurancaModule { }
