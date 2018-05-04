@@ -1,3 +1,4 @@
+import { environment } from './../../environments/environment';
 import { Headers, URLSearchParams } from '@angular/http';
 import { Injectable } from '@angular/core';
 
@@ -18,7 +19,7 @@ export class PessoasService {
 
   constructor(private http: AuthHttp) { }
 
-  pessoasURL = 'http://localhost:8080/pessoas';
+  pessoasURL = `${environment.apiUrl}/pessoas`;
 
   pesquisar(filtro: PessoaFiltro): Promise<any> {
     const params = new URLSearchParams();

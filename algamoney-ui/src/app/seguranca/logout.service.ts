@@ -1,13 +1,13 @@
-import { AuthService } from './auth.service';
 import { AuthHttp } from 'angular2-jwt';
 import { Injectable } from '@angular/core';
 
-import 'rxjs/operator/toPromise';
+import { environment } from './../../environments/environment';
+import { AuthService } from './auth.service';
 
 @Injectable()
 export class LogoutService {
 
-  tokenRevokeUrl = 'http://localhost:8080/token/revoke';
+  tokenRevokeUrl = `${environment.apiUrl}/token/revoke`;
 
   constructor(
     private http: AuthHttp,
@@ -15,7 +15,7 @@ export class LogoutService {
   ) { }
 
   logout() {
-    return this.http.delete(this.tokenRevokeUrl)
+    return this.http.delete(this.tokenRevokeUrl, {withCredentials: true})
       .toPromise()
       .then(() => {
         this.auth.limparAccessToken();

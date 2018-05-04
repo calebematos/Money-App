@@ -1,5 +1,6 @@
 import { Router } from '@angular/router';
 import { Component } from '@angular/core';
+
 import { ToastyConfig } from 'ng2-toasty';
 
 @Component({
