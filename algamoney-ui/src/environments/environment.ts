@@ -5,5 +5,5 @@
 
 export const environment = {
   production: false,
-  apiUrl: 'https://trunix-money-api.herokuapp.com'
+  apiUrl: 'http://localhost:8080'
 };
