@@ -3,13 +3,14 @@ import { Injectable } from '@angular/core';
 
 import { AuthHttp } from 'angular2-jwt';
 import 'rxjs/operator/toPromise';
+import { environment } from './../../environments/environment';
 
 @Injectable()
 export class CategoriaService {
 
   constructor(private http: AuthHttp) { }
 
-  pessoasURL = 'http://localhost:8080/categorias';
+  pessoasURL = `${environment.apiUrl}/categorias`;
 
 
   listarTodas(): Promise<any> {
