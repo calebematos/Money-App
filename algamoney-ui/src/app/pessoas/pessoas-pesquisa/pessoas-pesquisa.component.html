@@ -18,28 +18,43 @@
 
   <div class="ui-g">
     <div class="ui-g-12">
-      <p-dataTable [value]="pessoas" [responsive]="true" [paginator]="true" emptyMessage="Nenhum registro encotrado"
-        [rows]="filtro.itensPorPagina" [lazy]=true [totalRecords]="totalDeRegistros"
+      <p-table [value]="pessoas" [responsive]="true" [paginator]="true" [rows]="filtro.itensPorPagina" [lazy]=true [totalRecords]="totalDeRegistros"
         (onLazyLoad)="aoMudarPagina($event)" #tabela>
-        <p-column field="nome" header="Nome"></p-column>
-        <p-column field="endereco.cidade" header="Cidade"></p-column>
-        <p-column field="endereco.estado" header="estado"></p-column>
-        <p-column field="status" header="Status">
-          <ng-template let-pess="rowData" pTemplate="body">
-            <a href="javascript:;" (click)="altarStatus(pess)" pTooltip="{{ pess.ativo ? 'Desativar' : 'Ativar' }}" tooltipPosition="top">
+
+        <ng-template pTemplate="header">
+          <tr>
+            <th>Nome</th>
+            <th>Cidade</th>
+            <th>Estado</th>
+            <th>Status</th>
+            <th class="col-acoes-header"></th>
+          </tr>
+        </ng-template>
+
+        <ng-template pTemplate="body" let-pess>
+          <tr>
+            <td>{{ pess.nome }}</td>
+            <td>{{ pess.endereco.cidade}}</td>
+            <td>{{ pess.endereco.estado}}</td>
+            <td>
+              <a href="javascript:;" (click)="altarStatus(pess)" pTooltip="{{ pess.ativo ? 'Desativar' : 'Ativar' }}" tooltipPosition="top">
                 {{ pess.ativo ? "Ativo" : "Inativo" }}</a>
-          </ng-template>
-        </p-column>
-
-        <p-column styleClass="col-acoes">
-          <ng-template pTemplate="body" let-pess="rowData">
-            <button pButton icon="fa-pencil" pTooltip="Editar" tooltipPosition="top" [routerLink]="['/pessoas', pess.codigo]"></button>
-            <button pButton icon="fa-trash" pTooltip="Excluir" tooltipPosition="top"
-              (click)="confirmarExclusao(pess)"></button>
-          </ng-template>
-        </p-column>
-
-      </p-dataTable>
+              {{ pess.status}}
+            </td>
+            <td>
+              <button pButton icon="fa-pencil" pTooltip="Editar" tooltipPosition="top" [routerLink]="['/pessoas', pess.codigo]"></button>
+              <button pButton icon="fa-trash" pTooltip="Excluir" tooltipPosition="top" (click)="confirmarExclusao(pess)"></button>
+            </td>
+          </tr>
+        </ng-template>
+        <ng-template pTemplate="emptymessage">
+          <tr>
+            <td colspan="6">
+              Nenhum registro encotrado
+            </td>
+          </tr>
+        </ng-template>
+      </p-table>
     </div>
     <div class="ui-g-12">
       <button pButton label="Nova pessoa" routerLink="/pessoas/nova"></button>

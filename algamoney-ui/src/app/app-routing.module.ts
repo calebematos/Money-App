@@ -1,3 +1,4 @@
+import { patch } from 'webdriver-js-extender';
 import { NaoAutorizadoComponent } from './core/nao-autorizado.component';
 import { NgModule } from '@angular/core';
 import { Routes, RouterModule } from '@angular/router';
@@ -9,10 +10,15 @@ import { LancamentoCadastroComponent } from './lancamentos/lancamento-cadastro/l
 import { LancamentosPesquisaComponent } from './lancamentos/lancamentos-pesquisa/lancamentos-pesquisa.component';
 
 const rotas: Routes = [
+
+  { path: 'lancamentos', loadChildren: 'app/lancamentos/lancamentos.module#LancamentosModule'},
+  { path: 'pessoas', loadChildren: 'app/pessoas/pessoas.module#PessoasModule'},
+
   { path: '', redirectTo: 'lancamentos', pathMatch: 'full' },
   { path: 'pagina-nao-encontrada', component: PaginaNaoEncontradaComponent },
   { path: 'nao-autorizado', component: NaoAutorizadoComponent },
   { path: '**', redirectTo: 'pagina-nao-encontrada' }
+
 ];
 
 

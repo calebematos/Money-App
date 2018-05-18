@@ -5,7 +5,7 @@ import { FormsModule } from '@angular/forms';
 import { InputMaskModule } from 'primeng/inputmask';
 import { InputTextareaModule } from 'primeng/inputtextarea';
 import { TooltipModule } from 'primeng/tooltip';
-import { DataTableModule } from 'primeng/datatable';
+import { TableModule } from 'primeng/table';
 import { ButtonModule } from 'primeng/button';
 import { InputTextModule } from 'primeng/inputtext';
 import { KeyFilterModule } from 'primeng/keyfilter';
@@ -23,7 +23,7 @@ import { PessoaCadastroComponent } from './pessoa-cadastro/pessoa-cadastro.compo
 
     InputTextModule,
     ButtonModule,
-    DataTableModule,
+    TableModule,
     TooltipModule,
     InputMaskModule,
     KeyFilterModule,

@@ -1,10 +1,10 @@
-import { FormsModule } from '@angular/forms';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 
 import { InputTextModule } from 'primeng/inputtext';
 import { ButtonModule } from 'primeng/button';
-import { DataTableModule } from 'primeng/datatable';
+import { TableModule } from 'primeng/table';
 import { TooltipModule } from 'primeng/tooltip';
 import { InputTextareaModule } from 'primeng/inputtextarea';
 import { CalendarModule } from 'primeng/calendar';
@@ -23,10 +23,11 @@ import { LancamentosPesquisaComponent } from './lancamentos-pesquisa/lancamentos
   imports: [
     CommonModule,
     FormsModule,
+    ReactiveFormsModule,
 
     InputTextModule,
     ButtonModule,
-    DataTableModule,
+    TableModule,
     TooltipModule,
     InputTextareaModule,
     CalendarModule,
