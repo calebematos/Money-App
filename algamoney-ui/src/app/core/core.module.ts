@@ -14,11 +14,13 @@ import { JwtHelper } from 'angular2-jwt';
 import { CategoriaService } from './../categorias/categoria.service';
 import { PessoasService } from './../pessoas/pessoas.service';
 import { LancamentoService } from './../lancamentos/lancamento.service';
+import { DashboardService } from './../dashboard/dashboard.service';
 import { NavbarComponent } from './navbar/navbar.component';
 import { ErrorHandlerService } from './error-handler.service';
 import { PaginaNaoEncontradaComponent } from './pagina-nao-encontrada.component';
 import { AuthService } from '../seguranca/auth.service';
 import { NaoAutorizadoComponent } from './nao-autorizado.component';
+import { RelatoriosService } from '../relatorios/relatorios.service';
 
 registerLocaleData(localePt, 'pt-BR');
 
@@ -40,6 +42,8 @@ registerLocaleData(localePt, 'pt-BR');
     LancamentoService,
     PessoasService,
     CategoriaService,
+    DashboardService,
+    RelatoriosService,
     ErrorHandlerService,
     AuthService,
     JwtHelper,

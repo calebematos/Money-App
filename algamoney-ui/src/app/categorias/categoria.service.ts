@@ -10,12 +10,12 @@ export class CategoriaService {
 
   constructor(private http: AuthHttp) { }
 
-  pessoasURL = `${environment.apiUrl}/categorias`;
+  categoriasURL = `${environment.apiUrl}/categorias`;
 
 
   listarTodas(): Promise<any> {
 
-    return this.http.get(this.pessoasURL)
+    return this.http.get(this.categoriasURL)
       .toPromise()
       .then(response => response.json());
   }
