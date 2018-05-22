@@ -10,6 +10,7 @@ import { Lancamento } from './../../core/model';
 import { PessoasService } from './../../pessoas/pessoas.service';
 import { ErrorHandlerService } from '../../core/error-handler.service';
 import { CategoriaService } from './../../categorias/categoria.service';
+import { CalendarioPtBr } from './../../shared/Calendario-ptBr';
 import { timeout } from 'q';
 
 @Component({
@@ -23,6 +24,8 @@ export class LancamentoCadastroComponent implements OnInit {
     { label: 'Receita', value: 'RECEITA' },
     { label: 'Despesa', value: 'DESPESA' },
   ];
+
+  br = CalendarioPtBr.pt_BR;
 
   categorias = [];
   pessoas = [];

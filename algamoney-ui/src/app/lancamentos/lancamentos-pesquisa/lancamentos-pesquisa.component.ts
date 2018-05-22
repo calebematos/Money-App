@@ -8,6 +8,7 @@ import { ToastyService } from 'ng2-toasty';
 import { AuthService } from './../../seguranca/auth.service';
 import { ErrorHandlerService } from './../../core/error-handler.service';
 import { LancamentoService, LancamentosFiltro } from './../lancamento.service';
+import { CalendarioPtBr } from './../../shared/Calendario-ptBr';
 
 
 @Component({
@@ -16,6 +17,8 @@ import { LancamentoService, LancamentosFiltro } from './../lancamento.service';
   styleUrls: ['./lancamentos-pesquisa.component.css']
 })
 export class LancamentosPesquisaComponent implements OnInit {
+
+  br = CalendarioPtBr.pt_BR;
 
   filtro = new LancamentosFiltro();
   lancamentos = [];

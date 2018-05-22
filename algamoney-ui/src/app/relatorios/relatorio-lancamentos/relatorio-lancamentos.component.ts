@@ -1,5 +1,7 @@
-import { RelatoriosService } from './../relatorios.service';
 import { Component, OnInit } from '@angular/core';
+
+import { CalendarioPtBr } from './../../shared/Calendario-ptBr';
+import { RelatoriosService } from './../relatorios.service';
 
 @Component({
   selector: 'app-relatorio-lancamentos',
@@ -13,8 +15,9 @@ export class RelatorioLancamentosComponent implements OnInit {
 
   constructor(private relatoriosService: RelatoriosService) { }
 
-  ngOnInit() {
-  }
+  br = CalendarioPtBr.pt_BR;
+
+  ngOnInit() { }
 
 
   gerar() {

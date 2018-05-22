@@ -14,9 +14,11 @@
 
       <div class="ui-g-12">
         <label style="display:block">Vencimento</label>
-        <p-calendar dateFormat="dd/mm/yy" [inputStyle]="{width:'90px'}" name="vencimentoInicio" [(ngModel)]="filtro.dataVencimentoInicio"></p-calendar>
+        <p-calendar dateFormat="dd/mm/yy" [inputStyle]="{width:'90px'}"  [locale]="br"
+          name="vencimentoInicio" [(ngModel)]="filtro.dataVencimentoInicio"></p-calendar>
         <label>até</label>
-        <p-calendar dateFormat="dd/mm/yy" [inputStyle]="{width:'90px'}" name="vencimentoFim" [(ngModel)]="filtro.dataVencimentoFim"></p-calendar>
+        <p-calendar dateFormat="dd/mm/yy" [inputStyle]="{width:'90px'}"  [locale]="br"
+          name="vencimentoFim" [(ngModel)]="filtro.dataVencimentoFim"></p-calendar>
       </div>
 
       <div class="ui-g-12">

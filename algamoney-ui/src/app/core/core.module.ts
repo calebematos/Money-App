@@ -30,7 +30,7 @@ registerLocaleData(localePt, 'pt-BR');
     RouterModule,
 
     ToastyModule.forRoot(),
-    ConfirmDialogModule,
+    ConfirmDialogModule
   ],
   declarations: [NavbarComponent, PaginaNaoEncontradaComponent, NaoAutorizadoComponent],
   exports: [
