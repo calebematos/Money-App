@@ -6,6 +6,7 @@ import java.time.LocalDate;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.Optional;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -76,7 +77,7 @@ public class LancamentoService {
 	
 	public Lancamento salvar(Lancamento lancamento) {
 
-		Pessoa pessoa = pessoaRepository.findOne(lancamento.getPessoa().getCodigo());
+		Pessoa pessoa = pessoaRepository.getOne(lancamento.getPessoa().getCodigo());
 
 		if (pessoa == null || pessoa.isInativo())
 			throw new PessoaInexistenteOuInativaException();
@@ -115,17 +116,14 @@ public class LancamentoService {
 	private void validarPessoa(Lancamento lancamento) {
 		Pessoa pessoa = null;
 		if(lancamento.getPessoa().getCodigo() != null)
-			pessoa = pessoaRepository.findOne(lancamento.getPessoa().getCodigo());
+			pessoa = pessoaRepository.getOne(lancamento.getPessoa().getCodigo());
 		
 		if(pessoa == null || pessoa.isInativo())
 			throw new PessoaInexistenteOuInativaException();
 	}
 
 	private Lancamento buscarLancamentoExistente(Long codigo) {
-		Lancamento lancamento = lancamentoRepository.findOne(codigo);
-		if (lancamento == null) {
-			throw new EntidadeNaoExiteException();
-		}
+		Lancamento lancamento = lancamentoRepository.findById(codigo).orElseThrow(() -> new EntidadeNaoExiteException());
 		return lancamento;
 	}
 
