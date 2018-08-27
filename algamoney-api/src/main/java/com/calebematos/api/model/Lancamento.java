@@ -57,6 +57,8 @@ public class Lancamento {
 	@JoinColumn(name = "codigo_pessoa")
 	private Pessoa pessoa;
 	
+	private String anexo;
+	
 	@Transient
 	@JsonIgnore
 	public Boolean isReceita() {
@@ -158,6 +160,14 @@ public class Lancamento {
 		} else if (!codigo.equals(other.codigo))
 			return false;
 		return true;
+	}
+
+	public String getAnexo() {
+		return anexo;
+	}
+
+	public void setAnexo(String anexo) {
+		this.anexo = anexo;
 	}
 
 }
